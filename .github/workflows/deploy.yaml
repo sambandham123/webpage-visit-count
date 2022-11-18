@@ -8,7 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - run: echo $(git rev-parse HEAD) > $SHA
       - run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-      - run: docker build -t devopslearnerboy/website-visits .
-      - run: docker push devopslearnerboy/website-visits
+      - run: docker build -t devopslearnerboy/website-visits:latest -t devopslearnerboy/website-visits:$SHA .
+      - run: docker push devopslearnerboy/website-visits:$SHA
   
