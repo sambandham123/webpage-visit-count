@@ -11,5 +11,7 @@ jobs:
       - uses: actions/checkout@v2
       - run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
       - run: docker build -t devopslearnerboy/website-visits:latest -t devopslearnerboy/website-visits:$GITHUB_SHA .
+
+      - run: docker push devopslearnerboy/website-visits:latest
       - run: docker push devopslearnerboy/website-visits:$GITHUB_SHA
   
