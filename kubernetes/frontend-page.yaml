@@ -1,7 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: null
   labels:
     app: frontend-page
   name: frontend-page
@@ -10,15 +9,13 @@ spec:
   selector:
     matchLabels:
       app: frontend-page
-  strategy: {}
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: frontend-page
     spec:
+      imagePullSecrets:
+        - name: docker-creds
       containers:
-      - image: devopslearnerboy/website-visits
-        name: website-visits
-        resources: {}
-status: {}
+        - image: devopslearnerboy/website-visits:latest
+          name: website-visits

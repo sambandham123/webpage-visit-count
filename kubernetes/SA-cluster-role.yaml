@@ -1,0 +1,33 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: continuous-deployment
+rules:
+  - apiGroups:
+      - ''
+      - apps
+      - networking.k8s.io
+    resources:
+      - namespaces
+      - deployments
+      - replicasets
+      - ingresses
+      - services
+      - secrets
+    verbs:
+      - create
+      - delete
+      - deletecollection
+      - get
+      - list
+      - patch
+      - update
+      - watch
+
+
+
+# Add the clusterrole binding 
+# kubectl create clusterrolebinding continuous-deployment --clusterrole=continuous-deployment --serviceaccount=default:github-actions
+
+
+#eyJhbGciOiJSUzI1NiIsImtpZCI6IjVWTm9fa0lMb3hoQjVjdjZvT0lKVkRUUDNWOEVka192MHNpUW94MmI3RTAifQ.eyJhdWQiOlsiaHR0cHM6Ly9rdWJlcm5ldGVzLmRlZmF1bHQuc3ZjLmNsdXN0ZXIubG9jYWwiXSwiZXhwIjoxNjY5ODkzODk1LCJpYXQiOjE2Njk4OTAyOTUsImlzcyI6Imh0dHBzOi8va3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwia3ViZXJuZXRlcy5pbyI6eyJuYW1lc3BhY2UiOiJkZWZhdWx0Iiwic2VydmljZWFjY291bnQiOnsibmFtZSI6ImdpdGh1Yi1hY3Rpb25zIiwidWlkIjoiYTk1ODdlOTYtMmZkYi00MTZlLWE2NGItYTEyNGFjMWY3ZjU4In19LCJuYmYiOjE2Njk4OTAyOTUsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDpkZWZhdWx0OmdpdGh1Yi1hY3Rpb25zIn0.WD5bkfdg76QVcKtmaUJqH18nag8FZ1Z8-5cbROQgYtB9CjT5VtoswtsXuv1HeKYpbt7VFypfMBbJA76OA4CW1cuRSxhrzdGAQ2eSS6VDb2d4n7SFcwMBycXJeZWPcCPpllAHuocbe8N3T6PxChZQIEEk--LszqGuj0MfsKuoqUc9hhSo-ycYZllR_q18kegwUdOfNHCDwmr6jIt7MftJsIQkIsSCMFDlzvj7VZoYEjliTZqAK9uEKN2EvsV6fSL1QLpeQJab0pXUyeoYJa5l0DLRIvW06SrDqcgUZCVArMIUnEkSFVRJ9Drr4ZXveMs0iVGeK25x2LwBe-0MIy2yfw
