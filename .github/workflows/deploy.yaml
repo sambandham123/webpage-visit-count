@@ -2,7 +2,7 @@ name: Website visits project
 on:
   push:
     branches:
-      - main
+      - addthebranchnamehere
 
 jobs:
   build and push image:
