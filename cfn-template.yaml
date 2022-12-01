@@ -1,0 +1,50 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Used to Create Master and Slave node
+Parameters:
+  KeyName:
+    Description: Name of an existing EC2 KeyPair to enable SSH access to the instance
+    Type: 'AWS::EC2::KeyPair::KeyName'
+    ConstraintDescription: must be the name of an existing EC2 KeyPair.
+Resources:
+  InstanceSG:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      GroupDescription: Kubernetes Security Group
+      SecurityGroupIngress:
+        - IpProtocol: '-1'
+          FromPort: '22'
+          ToPort: '22'
+          CidrIp: 0.0.0.0/0
+  MasterNode:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      ImageId: ami-062df10d14676e201
+      InstanceType: t2.medium
+      KeyName: !Ref KeyName
+      SecurityGroups:
+        - !Ref InstanceSG
+      Tags:
+        - Key: Name
+          Value: Master
+  SlaveNode:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      ImageId: ami-062df10d14676e201
+      InstanceType: t2.micro
+      KeyName: !Ref KeyName
+      SecurityGroups:
+        - !Ref InstanceSG
+      Tags:
+        - Key: Name
+          Value: Slave
+Outputs:
+  MasterInstanceId:
+    Description: "Instance Id of the Master Instance"
+    Value: !Ref MasterNode
+  SlaveInstanceId:
+    Description: "Instance Id of the Master Instance"
+    Value: !Ref SlaveNode
+  SecGroupId:
+    Description: "Security Group ID"
+    Value: !Ref InstanceSG
+  
