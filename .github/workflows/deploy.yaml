@@ -2,41 +2,23 @@ name: Website visits project
 on:
   push:
     branches:
-      - addthebranchnamehere
+      - master
 
 jobs:
-  build and push image:
+  build:
+    name: Docker Login and Image Push 
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-      - run: docker build -t devopslearnerboy/website-visits:latest -t devopslearnerboy/website-visits:$GITHUB_SHA .
 
-      - run: docker push devopslearnerboy/website-visits:latest
-      - run: docker push devopslearnerboy/website-visits:$GITHUB_SHA
-  
-  Configure AWS Credentials and Deploy to cluster:
-    runs-on: ubuntu-latest
-    needs: [build and push image]
-    steps:
-    
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-south-1
-      
-      - name: Deploy to K8s Cluster
-        uses: kodermax/kubectl-aws-eks@master
-        env:
-          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
-          IMAGE_TAG: ${{ github.sha }}
-        run: |
-            chmod +x ./deploy.sh
-            ./deploy.sh
-        shell: bash 
+      - name: Docker Login
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
 
+      - name: Image build
+        run: docker build -t devopslearnerboy/website-visits:latest -t devopslearnerboy/website-visits:$GITHUB_SHA .
 
-  
-  
+      - name: Push Image to Docker Hub with Latest tag 
+        run: docker push devopslearnerboy/website-visits:latest
+
+      - name: Push Image to Docker Hub with Github Hash Tag
+        run: docker push devopslearnerboy/website-visits:$GITHUB_SHA
