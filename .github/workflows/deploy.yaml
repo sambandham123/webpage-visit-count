@@ -15,7 +15,7 @@ jobs:
         run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Image build
-        run: docker build -t devopslearnerboy/website-visits:latest -t devopslearnerboy/website-visits:$GITHUB_SHA .
+        run: docker build -t devopslearnerboy/website-visits:latest -t devopslearnerboy/website-visits:$GITHUB_SHA ./Docker
 
       - name: Push Image to Docker Hub with Latest tag 
         run: docker push devopslearnerboy/website-visits:latest
