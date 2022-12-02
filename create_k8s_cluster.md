@@ -45,16 +45,16 @@
 
 3. Install Kubectl kubeadm kubelet     
 
-    sudo apt-get update
-    sudo apt-get install -y apt-transport-https ca-certificates curl
+        sudo apt-get update
+        sudo apt-get install -y apt-transport-https ca-certificates curl
 
-    sudo curl -fsSLo /etc/apt/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
+        sudo curl -fsSLo /etc/apt/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
 
-    echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+        echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 
-    sudo apt-get update
-    sudo apt-get install -y kubelet kubeadm kubectl
-    sudo apt-mark hold kubelet kubeadm kubectl
+        sudo apt-get update
+        sudo apt-get install -y kubelet kubeadm kubectl
+        sudo apt-mark hold kubelet kubeadm kubectl
 
 
 ## Run these below commands on the Master node
@@ -65,9 +65,18 @@
    sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
    sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
+   ######https://172.31.11.1:6443
+
 6. export KUBECONFIG=/etc/kubernetes/admin.conf
 
 7. kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
 
 8. kubeadm token create --print-join-command > /tmp/
+
+9. Example token file - you can get this but running this 
+
+    kubeadm token create --print-join-command
+
+    kubeadm join 172.31.11.1:6443 --token d6lv2w.yrh89dkbsie3pv8x \
+	--discovery-token-ca-cert-hash sha256:5977e99fa9a9e82f15f5c302d58f66bb31959315d3895166f8fa54c5baa74f75
 
