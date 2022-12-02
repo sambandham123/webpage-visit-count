@@ -32,9 +32,8 @@ jobs:
       - name: Set the Kubernetes context
         uses: azure/k8s-set-context@v2
         with:
-          method: service-account
-          k8s-url: https://13.233.95.246:6443/
-          k8s-secret: ${{ secrets.KUBERNETES_SECRET }}
+          method: kubeconfig
+          kubeconfig: ${{ secrets.KUBE_CONFIG }}
       - name: Checkout source code
         uses: actions/checkout@v3
       - name: Deploy to the Kubernetes cluster
