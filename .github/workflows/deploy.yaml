@@ -46,4 +46,4 @@ jobs:
             kubernetes/frontend-page.yaml
             kubernetes/frontend-page-service.yaml
           images: |
-            devopslearnerboy/website-visits:${{ GITHUB_SHA }}
+            devopslearnerboy/website-visits:${{ github.sha }}
