@@ -34,8 +34,10 @@ jobs:
         with:
           method: kubeconfig
           kubeconfig: ${{ secrets.KUBE_CONFIG }}
+
       - name: Checkout source code
         uses: actions/checkout@v3
+
       - name: Deploy to the Kubernetes cluster
         uses: azure/k8s-deploy@v1
         with:
@@ -43,5 +45,3 @@ jobs:
           manifests: |
             kubernetes/frontend-page.yaml
             kubernetes/frontend-page-service.yaml
-          images: |
-            devopslearnerboy/website-visits:latest
